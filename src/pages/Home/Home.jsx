@@ -1,13 +1,12 @@
 import React from 'react'
 import { Container } from './Home.styled'
-import { Title } from '../../styles/General.styled'
-import Header from '../../components/Header/Header'
+import { Title, Subtitle } from '../../styles/General.styled'
 
 function Home() {
   return (
     <Container>
-      <Header />
       <Title>Tic Tac Toe</Title>
+      <Subtitle>Play with your friends, higher score wins!</Subtitle>
     </Container>
   )
 }
