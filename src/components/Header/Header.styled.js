@@ -12,6 +12,7 @@ export const HeaderWrapper = styled.header `
         height: 3rem;
         width: auto;
         fill: ${(props) => props.theme.colors.text}; 
+        cursor: pointer;
 }
 `;
 
