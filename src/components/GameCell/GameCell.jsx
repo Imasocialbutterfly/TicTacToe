@@ -6,13 +6,18 @@ import { ReactComponent as IconX } from "../../assets/svgs/icon-x.svg";
 import { ReactComponent as IconO } from "../../assets/svgs/icon-o.svg";
 import { ReactComponent as IconOutlineX } from "../../assets/svgs/icon-x-outline.svg";
 import { ReactComponent as IconOutlineO } from "../../assets/svgs/icon-o-outline.svg";
+import { ModalContext } from "../../context/ModalContext";
+import  RoundOverModal  from '../Modal/RoundOverModal/RoundOverModal';
 
 function GameCell({ cellItem, index }) {
   const { updateBoard, game } = useContext(GameContext);
+  const {handleModal} = useContext(ModalContext)
 
   const cellClickHandler = () => {
     updateBoard(index);
-    checkForWinner(game.board);
+    if (checkForWinner(game.board)) {
+      handleModal(<RoundOverModal/>)
+    };
   };
 
   if (cellItem === "x") {
