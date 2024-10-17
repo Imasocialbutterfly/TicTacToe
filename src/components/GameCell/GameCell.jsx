@@ -7,29 +7,32 @@ import { ReactComponent as IconO } from "../../assets/svgs/icon-o.svg";
 import { ReactComponent as IconOutlineX } from "../../assets/svgs/icon-x-outline.svg";
 import { ReactComponent as IconOutlineO } from "../../assets/svgs/icon-o-outline.svg";
 import { ModalContext } from "../../context/ModalContext";
-import  RoundOverModal  from '../Modal/RoundOverModal/RoundOverModal';
+import RoundOverModal from "../Modal/RoundOverModal/RoundOverModal";
 
 function GameCell({ cellItem, index }) {
-  const { updateBoard, game } = useContext(GameContext);
-  const {handleModal} = useContext(ModalContext)
+  const { updateBoard, game, roundComplete } = useContext(GameContext);
+  const { handleModal } = useContext(ModalContext);
 
   const cellClickHandler = () => {
     updateBoard(index);
-    if (checkForWinner(game.board)) {
-      handleModal(<RoundOverModal/>)
-    };
+    const result = checkForWinner(game.board);
+    if (result) {
+      roundComplete();
+      handleModal(<RoundOverModal />);
+    }
   };
 
   if (cellItem === "x") {
     return (
       <CellStyle>
-        <IconX/>
+        <IconX />
       </CellStyle>
+      
     );
   } else if (cellItem === "o") {
     return (
       <CellStyle>
-        <IconO/>
+        <IconO />
       </CellStyle>
     );
   }

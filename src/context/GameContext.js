@@ -15,7 +15,8 @@ export const GameContextProvider = (props) => {
             name: "Harry",
             score: 0,
         },
-        turn: "x"
+        turn: "x",
+        roundWinner: ""
     })
 
     const updateBoard = (index) => {
@@ -35,11 +36,49 @@ export const GameContextProvider = (props) => {
         })
     }
 
+    const toggleChoice = (choice) => choice === "x" ? "o" : "x";
+
+    const switchTurn = () => {
+        setGame(prevGame => ({
+            ...prevGame,
+            player1: {
+                ...prevGame.player1,
+                choice: toggleChoice(prevGame.player1.choice)
+            },
+            player2: {
+                ...prevGame.player2,
+                choice: toggleChoice(prevGame.player2.choice)
+            },
+            turn: "o",
+        }))
+    }
+
+    const updateScore = (winner) => {
+        setGame(prevGame => ({
+            ...prevGame,
+            [winner]: {
+                ...prevGame[winner],
+                score: prevGame[winner].score + 1
+            },
+            roundWinner: prevGame[winner]
+        }))
+    }
+
+    const roundComplete = () => {
+        if (game.turn === game.player1.choice) {
+            updateScore("player1")
+        } else if (game.turn === game.player2.choice) {
+            updateScore("player2")
+        }
+        switchTurn()
+    }
+
     return (
         <GameContext.Provider value={{
             game,
             updateBoard,
             resetBoard,
+            roundComplete,
         }}>
             {props.children}
         </GameContext.Provider>
