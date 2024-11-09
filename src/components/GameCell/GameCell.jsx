@@ -8,16 +8,25 @@ import { ReactComponent as IconOutlineX } from "../../assets/svgs/icon-x-outline
 import { ReactComponent as IconOutlineO } from "../../assets/svgs/icon-o-outline.svg";
 import { ModalContext } from "../../context/ModalContext";
 import RoundOverModal from "../Modal/RoundOverModal/RoundOverModal";
+import { SoundEffectsContext } from "../../context/SoundEffectsContext";
 
 function GameCell({ cellItem, index }) {
   const { updateBoard, game, roundComplete } = useContext(GameContext);
+  const { hoverSfx, clickSfx, winSfx, completedSfx } =
+    useContext(SoundEffectsContext);
   const { handleModal } = useContext(ModalContext);
 
   const cellClickHandler = () => {
+    clickSfx();
     updateBoard(index);
     const result = checkForWinner(game.board);
     if (result) {
-      roundComplete();
+      roundComplete(result);
+      if (result !== "draw") {
+        winSfx();
+      } else {
+        completedSfx();
+      }
       handleModal(<RoundOverModal />);
     }
   };
@@ -27,7 +36,6 @@ function GameCell({ cellItem, index }) {
       <CellStyle>
         <IconX />
       </CellStyle>
-      
     );
   } else if (cellItem === "o") {
     return (
@@ -38,8 +46,8 @@ function GameCell({ cellItem, index }) {
   }
 
   return (
-    <CellStyle onClick={cellClickHandler}>
-      {game.trun === "x" ? (
+    <CellStyle onClick={cellClickHandler} onMouseEnter={() => hoverSfx()}>
+      {game.turn === "x" ? (
         <IconOutlineX className="outlineIcon" />
       ) : (
         <IconOutlineO className="outlineIcon" />

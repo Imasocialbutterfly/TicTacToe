@@ -1,4 +1,7 @@
 export const checkForSequence = (option1, option2, option3) => {
+    if (option1 === null || option2 === null || option3 === null) {
+        return false
+    }
     return option1 === option2 && option2 === option3 && option1 !== null;
 }
 
@@ -10,7 +13,7 @@ export const checkForWinner = (board) => {
         }
     }
 
-    for (let i = 0; i < 3; i ++) {
+    for (let i = 0; i < 3; i++) {
         if (checkForSequence(board[i], board[i + 3], board[i + 6])) {
             return true
         }
@@ -22,6 +25,10 @@ export const checkForWinner = (board) => {
 
     if (checkForSequence(board[2], board[4], board[6])) {
         return true;
+    }
+
+    if (!board.includes(null)) {
+        return "draw"
     }
 
     return false

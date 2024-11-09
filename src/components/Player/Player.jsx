@@ -1,16 +1,21 @@
 import React from "react";
-import { PlayerWrapper } from "./Player.styled";
+import { PlayerWrapper, AvatarWrapper } from "./Player.styled";
+import Avatar from "react-nice-avatar";
+import { Subtitle } from "../../styles/General.styled";
 
-function Player({ player, side, isPlayerActive }) {
+const Player = ({ player, isPlayerActive }) => {
   return (
-    <PlayerWrapper isPlayerActive={isPlayerActive ?? false} side={side}>
-      <div>
-        {player.name}
-        {player.choice}
-      </div>
-      <div>{player.score}</div>
+    <PlayerWrapper>
+      <AvatarWrapper $isPlayerActive={isPlayerActive ?? false}>
+        <Avatar {...player.avatarConfig} />
+      </AvatarWrapper>
+
+      <Subtitle>
+        ({player.name})({player.choice.toUpperCase()})
+      </Subtitle>
+      <Subtitle>{player.score}</Subtitle>
     </PlayerWrapper>
   );
-}
+};
 
 export default Player;

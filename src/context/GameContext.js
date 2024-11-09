@@ -1,19 +1,24 @@
 import { createContext, useState } from "react";
+import Avatar, { genConfig } from "react-nice-avatar";
 
 export const GameContext = createContext({})
 
 export const GameContextProvider = (props) => {
     const [game, setGame] = useState({
-        board: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        board: [null, null, null, null, null, null, null, null, null],
         player1: {
             choice: "x",
-            name: "Frederick",
+            name: "Player1",
             score: 0,
+            color: "#8437f9",
+            avatarConfig: genConfig()
         },
         player2: {
             choice: 'o',
-            name: "Harry",
+            name: "Player2",
             score: 0,
+            color: "#f9c811",
+            avatarConfig: genConfig()
         },
         turn: "x",
         roundWinner: ""
@@ -32,7 +37,30 @@ export const GameContextProvider = (props) => {
     const resetBoard = () => {
         setGame({
             ...game,
-            board: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            board: [null, null, null, null, null, null, null, null, null],
+            turn: "x",
+        })
+    }
+
+    const restartGame = () => {
+        setGame({
+            board: [null, null, null, null, null, null, null, null, null],
+            player1: {
+                choice: "x",
+                name: "Player1",
+                score: 0,
+                color: "#8437f9",
+                avatarConfig: genConfig()
+            },
+            player2: {
+                choice: 'o',
+                name: "Player2",
+                score: 0,
+                color: "#f9c811",
+                avatarConfig: genConfig()
+            },
+            turn: "x",
+            roundWinner: ""
         })
     }
 
@@ -49,26 +77,43 @@ export const GameContextProvider = (props) => {
                 ...prevGame.player2,
                 choice: toggleChoice(prevGame.player2.choice)
             },
-            turn: "o",
+            turn: "x",
         }))
     }
 
     const updateScore = (winner) => {
-        setGame(prevGame => ({
-            ...prevGame,
-            [winner]: {
-                ...prevGame[winner],
-                score: prevGame[winner].score + 1
-            },
-            roundWinner: prevGame[winner]
-        }))
+        if (winner === 'draw') {
+            setGame(prevGame => ({
+                ...prevGame,
+                player1: {
+                    ...prevGame.player1,
+                    score: prevGame.player1.score + 0.5,
+                },
+                player2: {
+                    ...prevGame.player2,
+                    score: prevGame.player2.score + 0.5,
+                },
+                roundWinner: "",
+            }))
+        } else {
+            setGame(prevGame => ({
+                ...prevGame,
+                [winner]: {
+                    ...prevGame[winner],
+                    score: prevGame[winner].score + 1
+                },
+                roundWinner: prevGame[winner]
+            }))
+        }
     }
 
-    const roundComplete = () => {
-        if (game.turn === game.player1.choice) {
+    const roundComplete = (result) => {
+        if (game.turn === game.player1.choice && result !== "draw") {
             updateScore("player1")
-        } else if (game.turn === game.player2.choice) {
+        } else if (game.turn === game.player2.choice && result !== "draw") {
             updateScore("player2")
+        } else {
+            updateScore('draw')
         }
         switchTurn()
     }
@@ -79,6 +124,7 @@ export const GameContextProvider = (props) => {
             updateBoard,
             resetBoard,
             roundComplete,
+            restartGame,
         }}>
             {props.children}
         </GameContext.Provider>
