@@ -7,8 +7,8 @@ import { ReactComponent as IconO } from "../../assets/svgs/icon-o.svg";
 import { ReactComponent as IconOutlineX } from "../../assets/svgs/icon-x-outline.svg";
 import { ReactComponent as IconOutlineO } from "../../assets/svgs/icon-o-outline.svg";
 import { ModalContext } from "../../context/ModalContext";
-import RoundOverModal from "../Modal/RoundOverModal/RoundOverModal";
 import { SoundEffectsContext } from "../../context/SoundEffectsContext";
+import RoundOverModal from "../Modal/RoundOverModal";
 
 function GameCell({ cellItem, index }) {
   const { updateBoard, game, roundComplete } = useContext(GameContext);

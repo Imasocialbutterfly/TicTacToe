@@ -9,7 +9,7 @@ const useSound = (url, options) => {
         audio.volume = options.volume
 
         setSound(audio);
-    }, [url])
+    }, [url]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return () => {
         if (sound) {
