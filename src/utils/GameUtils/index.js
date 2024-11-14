@@ -9,22 +9,22 @@ export const checkForWinner = (board) => {
 
     for (let i = 0; i < 9; i += 3) {
         if (checkForSequence(board[i], board[i + 1], board[i + 2])) {
-            return true
+            return [i, i + 1, i + 2];
         }
     }
 
     for (let i = 0; i < 3; i++) {
         if (checkForSequence(board[i], board[i + 3], board[i + 6])) {
-            return true
+            return [i, i + 3, i + 6];
         }
     }
 
     if (checkForSequence(board[0], board[4], board[8])) {
-        return true;
+        return [0, 4, 8];
     }
 
     if (checkForSequence(board[2], board[4], board[6])) {
-        return true;
+        return [2, 4, 6];
     }
 
     if (!board.includes(null)) {

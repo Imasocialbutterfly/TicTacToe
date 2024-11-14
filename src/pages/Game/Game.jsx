@@ -9,21 +9,24 @@ const Game = () => {
   const { game } = useContext(GameContext);
 
   return (
-    <Container columnBased>
+    <Container>
       <Player
         player={game.player1}
         isPlayerActive={game.player1.choice === game.turn}
-        side="left"
       />
       <GameBoardStyle>
         {game.board.map((item, index) => (
-          <GameCell key={index} cellItem={item} index={index} />
+          <GameCell
+            key={index}
+            cellItem={item}
+            index={index}
+            isWinningCell={game.winningCombo.includes(index)}
+          />
         ))}
       </GameBoardStyle>
       <Player
         player={game.player2}
         isPlayerActive={game.player2.choice === game.turn}
-        side="right"
       />
     </Container>
   );

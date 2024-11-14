@@ -20,17 +20,17 @@ function MusicPlayer() {
     if (isPlaying) {
       const promise = playerRef.current?.play();
       setPlayPromise(promise);
-      if (playerRef.current.volume) playerRef.current.volume = 0.1;
+      if (playerRef.current?.volume) playerRef.current.volume = 0.1;
 
       return;
     }
     playerRef.current.pause();
-  }, [isPlaying]);
+  }, [isPlaying, currentSong]);
 
   const shuffleHandler = async () => {
     clickSfx();
-    await playPromise.then(() => {
-      playerRef.current.pause();
+    await playPromise?.then(() => {
+      playerRef.current?.pause();
       setIsPlaying(false);
     });
 
@@ -45,8 +45,8 @@ function MusicPlayer() {
       {isPlaying ? (
         <PauseIcon
           onClick={() => {
-            setIsPlaying(false);
             clickSfx();
+            setIsPlaying(false);
           }}
           onMouseEnter={() => hoverSfx()}
         />

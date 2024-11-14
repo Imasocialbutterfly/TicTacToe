@@ -6,7 +6,7 @@ export const HeaderWrapper = styled.header `
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    padding: 2rem;
+    padding: 1rem;
 
     .logo {
         height: 3rem;

@@ -10,7 +10,7 @@ import { ModalContext } from "../../context/ModalContext";
 import { SoundEffectsContext } from "../../context/SoundEffectsContext";
 import RoundOverModal from "../Modal/RoundOverModal";
 
-function GameCell({ cellItem, index }) {
+function GameCell({ cellItem, index, isWinningCell }) {
   const { updateBoard, game, roundComplete } = useContext(GameContext);
   const { hoverSfx, clickSfx, winSfx, completedSfx } =
     useContext(SoundEffectsContext);
@@ -24,23 +24,23 @@ function GameCell({ cellItem, index }) {
       roundComplete(result);
       if (result !== "draw") {
         winSfx();
-      } else {
-        completedSfx();
       }
-      handleModal(<RoundOverModal />);
+      setTimeout(() => {
+        handleModal(<RoundOverModal />);
+      }, 2000)
     }
   };
 
   if (cellItem === "x") {
     return (
-      <CellStyle>
-        <IconX />
+      <CellStyle isWinningCell={isWinningCell ?? false}>
+        <IconX className="markedItem"/>
       </CellStyle>
     );
   } else if (cellItem === "o") {
     return (
-      <CellStyle>
-        <IconO />
+      <CellStyle isWinningCell={isWinningCell ?? false}>
+        <IconO className="markedItem"/>
       </CellStyle>
     );
   }

@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
   body {
     background-color: ${(props) => props.theme.colors.primary};
     color: ${(props) =>
-      props.theme.colors.text}; // Ensure text color is from theme
+      props.theme.colors.text};
   }
 
   svg {
