@@ -12,7 +12,7 @@ import RoundOverModal from "../Modal/RoundOverModal";
 
 function GameCell({ cellItem, index, isWinningCell }) {
   const { updateBoard, game, roundComplete } = useContext(GameContext);
-  const { hoverSfx, clickSfx, winSfx, completedSfx } =
+  const { hoverSfx, clickSfx, winSfx } =
     useContext(SoundEffectsContext);
   const { handleModal } = useContext(ModalContext);
 
